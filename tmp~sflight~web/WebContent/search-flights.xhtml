@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="layout.xhtml">
+
+	<ui:define name="content">
+		<p:layoutUnit position="center" header="#{msg.search_flights}">
+			<h:form id="form">
+
+				<p:messages globalOnly="true" autoUpdate="true" showSummary="true" showDetail="true" />
+
+				<h:panelGrid columns="3">
+					<h:outputText value="#{msg.airline_id} " />
+					<p:inputText id="airlineId" value="#{searchFlights.airlineId}" required="true"
+						requiredMessage="#{err.value_required}">
+						<f:validator validatorId="formEntryValidator" />
+					</p:inputText>
+					<p:message for="airlineId" />
+
+					<h:outputText value="#{msg.dest_from} " />
+					<p:inputText id="destFrom" value="#{searchFlights.destFrom}" />
+					<p:message for="destFrom" />
+
+					<h:outputText value="#{msg.dest_to} " />
+					<p:inputText id="destTo" value="#{searchFlights.destTo}" />
+					<p:message for="destTo" />
+
+					<f:facet name="footer">
+						<p:commandButton actionListener="#{searchFlights.search}"
+							value="#{msg.search}" icon="ui-icon-search" update="form" />
+					</f:facet>
+				</h:panelGrid>
+
+				<p:spacer height="20" />
+
+				<h:panelGroup id="results" layout="block">
+					<p:dataTable value="#{searchFlights.flights}" var="flight"
+						paginator="true" rows="10"
+						rendered="#{not empty searchFlights.flights}">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.airline}" />
+							</f:facet>
+							<h:outputText value="#{flight.airlineId}" />
+						</h:column>
+						<p:column sortBy="#{flight.connectId}">
+							<f:facet name="header">
+								<h:outputText value="#{msg.connection}" />
+							</f:facet>
+
+							<h:outputText value="#{flight.connectId}" />
+
+						</p:column>
+						<p:column sortBy="#{flight.flightDate}">
+							<f:facet name="header">
+								<h:outputText value="#{msg.date}" />
+							</f:facet>
+							<h:outputText value="#{flight.flightDate}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.city_from}" />
+							</f:facet>
+							<h:outputText value="#{flight.cityFrom}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.aiport_from}" />
+							</f:facet>
+							<h:outputText value="#{flight.airportFrom}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.departing_at}" />
+							</f:facet>
+							<h:outputText value="#{flight.departureTime}">
+								<f:convertDateTime type="time" timeStyle="short" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.city_to}" />
+							</f:facet>
+							<h:outputText value="#{flight.cityTo}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.airport_to}" />
+							</f:facet>
+							<h:outputText value="#{flight.airportTo}" />
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.arriving_at}" />
+							</f:facet>
+							<h:outputText value="#{flight.arrivalTime}">
+								<f:convertDateTime type="time" timeStyle="short" />
+							</h:outputText>
+						</p:column>
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.price}" />
+							</f:facet>
+							<h:panelGroup>
+								<h:outputText value="#{flight.price}">
+									<f:converter converterId="currencyConverter" />
+								</h:outputText>
+								<h:outputText value=" #{flight.currency}" escape="false" />
+							</h:panelGroup>
+						</p:column>
+
+						<p:column>
+							<p:commandButton actionListener="#{searchFlights.fetchDetails}"
+								update=":display" oncomplete="dlg1.show()"
+								icon="ui-icon-comment">
+								<f:attribute name="airlineId" value="#{flight.airlineId}" />
+								<f:attribute name="connectId" value="#{flight.connectId}" />
+								<f:attribute name="flightDate" value="#{flight.flightDate}" />
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+			</h:form>
+		</p:layoutUnit>
+
+		<p:dialog header="#{msg.flight_details}" widgetVar="dlg1" resizable="false"
+			draggable="false" modal="true">
+			<h:panelGrid id="display" columns="2">
+				<h:panelGrid columns="2">
+					<h:outputLabel for="flightTime" value="#{msg.time_of_flight}" />
+					<h:outputText id="flightTime"
+						value="#{searchFlights.details.flightTime}">
+						<f:converter converterId="minutesConverter" />
+					</h:outputText>
+					<h:outputLabel for="flightDistance" value="#{msg.distance}" />
+					<h:panelGroup>
+						<h:outputText id="flightDistance"
+							value="#{searchFlights.details.distance}">
+							<f:converter converterId="distanceConverter" />
+						</h:outputText>
+						<h:outputText value=" #{searchFlights.details.unit}"
+							escape="false" />
+					</h:panelGroup>
+				</h:panelGrid>
+			</h:panelGrid>
+		</p:dialog>
+	</ui:define>
+
+</ui:composition>

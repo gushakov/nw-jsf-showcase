@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="../layout.xhtml">
+
+	<ui:define name="content">
+		<p:layoutUnit position="center" header="#{msg.search_bookings}">
+			<h:form id="form">
+
+				<p:messages globalOnly="true" autoUpdate="true" showSummary="true"
+					showDetail="true" />
+
+				<h:panelGrid columns="3">
+					<h:outputLabel for="airlineId" value="#{msg.airline_id}"></h:outputLabel>
+					<p:inputText id="airlineId" value="#{searchBookings.airlineId}">
+						<f:validator validatorId="formEntryValidator" />
+					</p:inputText>
+					<p:message for="airlineId" />
+
+					<h:outputLabel for="customerId" value="#{msg.customer_id}" />
+					<p:inputText id="customerId" value="#{searchBookings.customerId}">
+						<f:validator validatorId="formEntryValidator" />
+					</p:inputText>
+					<p:message for="customerId" />
+
+					<f:facet name="footer">
+						<p:commandButton actionListener="#{searchBookings.search}"
+							value="#{msg.search}" icon="ui-icon-search" update="form"></p:commandButton>
+					</f:facet>
+				</h:panelGrid>
+
+				<p:spacer height="20" />
+
+				<h:panelGroup id="results" layout="block">
+
+					<p:dataTable value="#{searchBookings.bookings}" var="booking"
+						paginator="true" rows="10"
+						rendered="#{not empty searchBookings.bookings}">
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.airline}" />
+							</f:facet>
+							<h:outputText value="#{booking.airlineId}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.booking_number}" />
+							</f:facet>
+							<h:outputText value="#{booking.bookingId}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.booking_date}" />
+							</f:facet>
+							<h:outputText value="#{booking.bookDate}" />
+						</p:column>
+
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.connection}" />
+							</f:facet>
+							<h:outputText value="#{booking.connectId}" />
+						</p:column>
+
+						<p:column sortBy="#{booking.flightDate}">
+							<f:facet name="header">
+								<h:outputText value="#{msg.flight_date}" />
+							</f:facet>
+							<h:outputText value="#{booking.flightDate}" />
+						</p:column>
+
+						<p:column sortBy="#{booking.customerId}">
+							<f:facet name="header">
+								<h:outputText value="#{msg.customer_number}" />
+							</f:facet>
+							<h:outputText value="#{booking.customerId}" />
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.reserved}" />
+							</f:facet>
+							<p:selectBooleanCheckbox disabled="true"
+								value="#{booking.reserved}"></p:selectBooleanCheckbox>
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.cancelled}" />
+							</f:facet>
+							<p:selectBooleanCheckbox disabled="true"
+								value="#{booking.cancelled}"></p:selectBooleanCheckbox>
+						</p:column>
+
+						<p:column>
+							<f:facet name="header">
+								<h:outputText value="#{msg.passenger}" />
+							</f:facet>
+							<h:outputText value="#{booking.passName}" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGroup>
+			</h:form>
+		</p:layoutUnit>
+	</ui:define>
+
+</ui:composition>

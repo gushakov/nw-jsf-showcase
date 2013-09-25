@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<p:layoutUnit position="center" header="#{msg.welcome}">
+		<h:form id="form">
+			<p:growl id="growl" showDetail="true" sticky="true"></p:growl>
+
+			<h:outputText value="#{msg.welcome_info}"></h:outputText>
+
+			<p:spacer height="10" />
+
+			<h:panelGrid columns="2">
+
+				<h:outputText value="#{msg.test_connection_to_backend}"></h:outputText>
+				<p:commandButton value="Test RFC"
+					actionListener="#{welcome.testRfc}" update="growl" />
+
+				<h:outputText value="#{msg.switch_theme}"></h:outputText>
+				<p:themeSwitcher value="#{welcome.theme}">
+					<f:selectItem itemLabel="#{msg.choose_theme}" itemValue="" />
+					<f:selectItems value="#{welcome.themes}" />
+					<p:ajax listner="#{welcome.saveTheme}" />
+				</p:themeSwitcher>
+
+				<h:outputText value="#{msg.current_language}"></h:outputText>
+				<h:outputText value="#{welcome.locale.displayLanguage}"></h:outputText>
+
+			</h:panelGrid>
+		</h:form>
+	</p:layoutUnit>
+
+</ui:composition>

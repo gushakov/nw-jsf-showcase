@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="../layout.xhtml">
+
+	<ui:define name="content">
+		<p:layoutUnit position="center" header="#{msg.book_a_flight}">
+			<h:form id="form">
+				<p:messages globalOnly="true" showSummary="true" showDetail="true"
+					autoUpdate="true" />
+
+				<h:panelGrid columns="3">
+					<h:outputText value="#{msg.airline}" />
+					<p:inputText id="airlineId" value="#{bookFlight.airlineId}"
+						required="true" requiredMessage="#{err.value_required}">
+						<f:validator validatorId="formEntryValidator" />
+					</p:inputText>
+					<p:message for="airlineId" showSummary="false" />
+
+					<h:outputText value="#{msg.connection}" />
+					<p:inputText id="connectId" value="#{bookFlight.connectId}"
+						required="true" requiredMessage="#{err.value_required}" />
+					<p:message for="connectId" showSummary="false" />
+
+					<h:outputText for="flightDate" value="#{msg.flight_date}" />
+					<p:calendar id="flightDate" value="#{bookFlight.flightDate}"
+						mode="popup" required="true"
+						requiredMessage="#{err.value_required}"
+						converterMessage="#{err.date_invalid}">
+						<f:validator validatorId="formEntryValidator" />
+					</p:calendar>
+					<p:message for="flightDate" showSummary="false" />
+
+					<h:outputText for="customerId" value="#{msg.customer_number}" />
+					<p:inputText id="customerId" value="#{bookFlight.customerId}"
+						required="true" requiredMessage="#{err.value_required}">
+						<f:validator validatorId="formEntryValidator" />
+					</p:inputText>
+					<p:message for="customerId" showSummary="false" />
+
+					<h:outputText for="counter" value="#{msg.counter_number}" />
+					<p:inputText id="counter" value="#{bookFlight.counter}"
+						required="true" requiredMessage="#{err.value_required}">
+						<f:validator validatorId="formEntryValidator" />
+					</p:inputText>
+					<p:message for="counter" showSummary="false" />
+
+					<h:outputText for="passName" value="#{msg.passenger_name}" />
+					<p:inputText id="passName" value="#{bookFlight.passName}"
+						required="true" requiredMessage="#{err.value_required}">
+						<f:validator validatorId="formEntryValidator" />
+					</p:inputText>
+					<p:message for="passName" showSummary="false" />
+
+					<f:facet name="footer">
+						<p:commandButton value="#{msg.book}"
+							actionListener="#{bookFlight.book}" update="form" />
+					</f:facet>
+
+				</h:panelGrid>
+
+			</h:form>
+		</p:layoutUnit>
+	</ui:define>
+
+</ui:composition>

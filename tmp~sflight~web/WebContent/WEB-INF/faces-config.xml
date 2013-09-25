@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<faces-config xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+	version="2.0">
+
+	<application>
+		<resource-bundle>
+			<base-name>ch.unil.sflight.web.jsf.message.errors</base-name>
+			<var>err</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>ch.unil.sflight.web.jsf.message.messages</base-name>
+			<var>msg</var>
+		</resource-bundle>
+		<locale-config>
+			<default-locale>en</default-locale>
+			<supported-locale>fr_CH</supported-locale>
+		</locale-config>
+	</application>
+
+	<converter>
+		<converter-id>currencyConverter</converter-id>
+		<converter-class>ch.unil.sflight.web.jsf.converter.CurrencyConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>minutesConverter</converter-id>
+		<converter-class>ch.unil.sflight.web.jsf.converter.MinutesConverter</converter-class>
+	</converter>
+	<converter>
+		<converter-id>distanceConverter</converter-id>
+		<converter-class>ch.unil.sflight.web.jsf.converter.DistanceConverter</converter-class>
+	</converter>
+	
+	<validator>
+		<validator-id>formEntryValidator</validator-id>
+		<validator-class>ch.unil.sflight.web.jsf.validator.FormEntryValidator</validator-class>
+	</validator>
+</faces-config>

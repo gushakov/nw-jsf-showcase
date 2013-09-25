@@ -1,0 +1,6 @@
+@CHARSET "UTF-8";
+
+/* adjust select drop-down panel font size */
+.ui-helper-reset {
+	font-size: 0.7em !important;
+}

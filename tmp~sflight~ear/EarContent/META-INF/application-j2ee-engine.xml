@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--
+		From original DTD, with "prepend" attribute of "reference" element
+		added. This is needed just to avoid the error indicator for the XML
+		parser.
+	-->
+
+<!DOCTYPE application-j2ee-engine [
+<!ELEMENT application-j2ee-engine (reference*, classpath?, provider-name?, modules-additional?, fail-over-enable?)>
+
+<!ELEMENT reference (reference-target)>
+<!ATTLIST reference reference-type (hard|weak) #REQUIRED>
+<!ATTLIST reference prepend (true|false) #IMPLIED>
+<!ELEMENT reference-target (#PCDATA)>
+<!ATTLIST reference-target target-type (application|library|service|interface) #REQUIRED>
+<!ATTLIST reference-target provider-name CDATA #IMPLIED>
+
+<!ELEMENT classpath (#PCDATA)>
+
+<!ELEMENT provider-name (#PCDATA)>
+
+<!ELEMENT modules-additional (module+)>
+<!ELEMENT module (entry-name, container-type+)>
+<!ELEMENT entry-name (#PCDATA)>
+<!ELEMENT container-type (#PCDATA)>
+
+<!ELEMENT fail-over-enable EMPTY>
+<!ATTLIST fail-over-enable mode (disable|on_request|on_attribute) #REQUIRED>
+]>
+
+<application-j2ee-engine>
+	
+	<!-- 
+		This is the reference to the JSF 2.0 library,
+		notice the prepend="true"
+	-->
+	
+	<reference reference-type="hard" prepend="true">
+		<reference-target provider-name="local.j2ee"
+			target-type="library">javax~faces~2.1.7</reference-target>
+	</reference>
+
+	<!-- 
+		This is only needed if you use com.sap.mw.jco.jra.ResultMap
+		in tmp~sflight~java, see part 1
+	 -->
+
+	<reference reference-type="hard">
+		<reference-target target-type="application"
+			provider-name="sap.com">tc~bl~jra~api</reference-target>
+	</reference>
+	
+	<!-- 
+		Cange to match your provider name
+	 -->
+	
+	<provider-name>unil.ch</provider-name>
+
+</application-j2ee-engine>
